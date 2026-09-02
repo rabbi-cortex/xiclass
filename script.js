@@ -122,7 +122,7 @@
 
             if (response.ok && result.success) {
                 statusMsg.className = 'status-msg show success';
-                statusMsg.textContent = '✅ ' + result.message + ' — GitHub রেপো চেক করুন!';
+                statusMsg.textContent = '✅ সাইন আপ সম্পূর্ণ। ইউজার আইডি ও PIN এর জন্য অপেক্ষা করুন।';
                 form.reset();
                 submitBtn.disabled = true;
                 agree.checked = false;
