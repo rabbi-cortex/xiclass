@@ -1,7 +1,3 @@
-// ============================================================
-//  script.js — ফর্ম হ্যান্ডলিং + GitHub API কল
-// ============================================================
-
 (function() {
     'use strict';
 
@@ -19,7 +15,6 @@
     const statusMsg = document.getElementById('statusMsg');
     const form = document.getElementById('regForm');
 
-    // ─── প্লেসহোল্ডার ───
     function attachTextBehavior(input, placeholder) {
         if (!input) return;
         input.addEventListener('focus', function() {
@@ -32,7 +27,6 @@
     attachTextBehavior(roll, 'এখানে রোল নম্বর দিন');
     attachTextBehavior(reg, 'এখানে রেজিস্ট্রেশন নম্বর দিন');
 
-    // ─── মোবাইল ফরম্যাট ───
     function attachMobileBehavior(input) {
         if (!input) return;
         input.addEventListener('focus', function() {
@@ -52,7 +46,6 @@
     attachMobileBehavior(mobile1);
     attachMobileBehavior(mobile2);
 
-    // ─── চেকবক্স ───
     agree.addEventListener('change', function() {
         submitBtn.disabled = !this.checked;
         if (this.checked) {
@@ -62,11 +55,9 @@
         }
     });
 
-    // ─── সাবমিট ───
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // ভ্যালিডেশন
         let valid = true;
         const m1 = mobile1.value.trim();
         const m2 = mobile2.value.trim();
@@ -91,7 +82,6 @@
         }
         if (!valid) return;
 
-        // ─── ডাটা ───
         const payload = {
             roll: roll.value.trim(),
             reg: reg.value.trim(),
@@ -101,26 +91,30 @@
             mobile2: m2
         };
 
-        // ─── UI লোডিং ───
+        // 🔥 লোডিং মেসেজ – GitHub এর কোনো উল্লেখ নেই
         submitBtn.disabled = true;
-        submitBtn.textContent = '⏳ সংরক্ষণ হচ্ছে...';
+        submitBtn.textContent = '⏳ দয়া করে অপেক্ষা করুন...';
         statusMsg.className = 'status-msg show loading';
-        statusMsg.textContent = '⏳ ডাটা GitHub-এ সংরক্ষণ করা হচ্ছে...';
+        statusMsg.textContent = '⏳ আপনার তথ্য যাচাই করা হচ্ছে...';
 
         try {
-            // 🔥 এখানে তোমার Vercel API URL বসাও
-            const API_URL = '/api/register'; 
-            // উদাহরণ: 'https://your-app.vercel.app/api/register'
-
+            const API_URL = '/api/register';
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
-            const result = await response.json();
+            const text = await response.text();
+            let result;
+            try {
+                result = JSON.parse(text);
+            } catch (e) {
+                throw new Error('সার্ভার থেকে সঠিক রেসপন্স আসছে না');
+            }
 
             if (response.ok && result.success) {
+                // ✅ সাফল্যের মেসেজ – সম্পূর্ণ জেনেরিক
                 statusMsg.className = 'status-msg show success';
                 statusMsg.textContent = '✅ সাইন আপ সম্পূর্ণ। ইউজার আইডি ও PIN এর জন্য অপেক্ষা করুন।';
                 form.reset();
@@ -131,8 +125,9 @@
                 throw new Error(result.error || 'সংরক্ষণ ব্যর্থ');
             }
         } catch (error) {
+            // ❌ এরর মেসেজ – জেনেরিক
             statusMsg.className = 'status-msg show error';
-            statusMsg.textContent = '❌ ' + error.message;
+            statusMsg.textContent = '❌ দুঃখিত, আবার চেষ্টা করুন।';
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = 'সাইন আপ';
