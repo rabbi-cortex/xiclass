@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XI Class Admission System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: #dce9f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 720px;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.08), 0 10px 24px rgba(0,0,0,0.1);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-bar {
+            height: 6px;
+            background: #4a8fd4;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 24px 32px 16px;
+            text-align: center;
+        }
+
+        .header .icon {
+            width: 46px;
+            height: 46px;
+            background: #4a8fd4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+        }
+
+        .header .icon span {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .header h1 {
+            color: #2c5f9e;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #666666;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .form-body {
+            padding: 22px 32px 28px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width { grid-column: 1 / -1; }
+
+        .form-group label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #222222;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            height: 46px;
+            padding: 0 14px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            color: #333333;
+            background: #ffffff;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #4a8fd4;
+            box-shadow: 0 0 0 2px rgba(74,143,212,0.15);
+        }
+
+        .warning-box {
+            margin-top: 20px;
+            padding: 13px 16px;
+            border: 1px solid #d9534f;
+            background: #fff5f5;
+            border-radius: 6px;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .warning-box.green {
+            border-color: #4caf50;
+            background: #f0faf0;
+        }
+
+        .warning-box p {
+            font-size: 13px;
+            color: #d9534f;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+
+        .warning-box.green p {
+            color: #2e7d32;
+        }
+
+        .checkbox-group {
+            margin-top: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 3px;
+            width: 17px;
+            height: 17px;
+            accent-color: #4a8fd4;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            color: #222222;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background-color: #4a8fd4;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #3a7bc8;
+        }
+
+        .submit-btn:disabled {
+            background-color: #b0c4de;
+            cursor: not-allowed;
+        }
+
+        .bottom-links {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid #eeeeee;
+            text-align: center;
+        }
+
+        .bottom-links p {
+            font-size: 14px;
+            color: #444444;
+            margin-bottom: 12px;
+        }
+
+        .bottom-links a {
+            color: #4a8fd4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .bottom-links a:hover {
+            text-decoration: underline;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #4a8fd4;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .home-link:hover {
+            text-decoration: underline;
+        }
+
+        .home-link svg {
+            width: 16px;
+            height: 16px;
+            fill: #4a8fd4;
+        }
+
+        .error-msg {
+            font-size: 12px;
+            color: #d9534f;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .status-msg {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            display: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .status-msg.show { display: block; }
+        .status-msg.success { background: #e8f5e9; color: #1e5a2e; border: 1px solid #6fcf97; }
+        .status-msg.error { background: #fdeaea; color: #a13232; border: 1px solid #f5baba; }
+        .status-msg.loading { background: #e3f0fa; color: #1a4972; border: 1px solid #b0d0e8; }
+
+        @media (max-width: 550px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .card { max-width: 100%; }
+            .form-body { padding: 18px 20px 22px; }
+            .header { padding: 20px 20px 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="top-bar"></div>
+        <div class="header">
+            <div class="icon"><span>+</span></div>
+            <h1>একাউন্ট তৈরী করুন</h1>
+            <p>সঠিক শিক্ষার্থী ও মোবাইল তথ্য দিয়ে অ্যাকাউন্ট তৈরী করুন</p>
+        </div>
+        <div class="form-body">
+            <form id="regForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>রোল</label>
+                        <input type="text" id="roll" required>
+                    </div>
+                    <div class="form-group">
+                        <label>বোর্ড</label>
+                        <select id="board" required>
+                            <option value="">Select Board</option>
+                            <option value="dhaka">Dhaka</option>
+                            <option value="hattogram">Chattogram</option>
+                            <option value="cumilla">Cumilla</option>
+                            <option value="rajshahi">Rajshahi</option>
+                            <option value="sylhet">Sylhet</option>
+                            <option value="BTEB">BTEB</option>
+                            <option value="Bou">BOU</option>
+                            <option value="barisal">Barisal</option>
+                            <option value="khulna">Khulna</option>
+                            <option value="dinajpur">Dinajpur</option>
+                            <option value="jessore">Jessore</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>বছর</label>
+                        <select id="year" required>
+                            <option value="">Select Year</option>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>রেজিস্ট্রেশন</label>
+                        <input type="text" id="reg" required>
+                    </div>
+                    <div class="form-group">
+                        <label>মোবাইল নম্বর</label>
+                        <input type="tel" id="mobile1" maxlength="11" required>
+                        <span class="error-msg" id="err1">নম্বর ১১ সংখ্যার হতে হবে (01 দিয়ে শুরু)</span>
+                    </div>
+                    <div class="form-group">
+                        <label>কনফার্ম মোবাইল নম্বর</label>
+                        <input type="tel" id="mobile2" maxlength="11" required>
+                        <span class="error-msg" id="err2">নম্বর মিলছে না</span>
+                    </div>
+                </div>
+
+                <div class="warning-box" id="warningBox">
+                    <p>সমস্ত তথ্য অবশ্যই সঠিক হতে হবে। বিশেষ করে নিজের বা ঘনিষ্ঠ কারো মোবাইল নম্বর ব্যবহার করুন। PIN কোড SMS-এ পাঠানো হবে এবং পৌঁছাতে সর্বোচ্চ ৩০ মিনিট লাগতে পারে। একাধিক একাউন্টে একই নম্বর ব্যবহার করা যাবে না।</p>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agree">
+                    <label for="agree">আমি পড়েছি এবং বুঝতে পেরেছি।</label>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>সাইন আপ</button>
+
+                <div id="statusMsg" class="status-msg"></div>
+
+                <div class="bottom-links">
+                    <p>আপনার কি অ্যাকাউন্ট আছে? <a href="https://xiclassadmission.gov.bd/login-new">লগ ইন</a></p>
+                    <a href="https://xiclassadmission.gov.bd/" class="home-link">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        হোমে ফিরে যান
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🔥 এটাই শুধু যোগ করো — বাকি HTML পুরোপুরি আগের মতো -->
+    <script src="script.js"></script>
+</body>
+</html>
