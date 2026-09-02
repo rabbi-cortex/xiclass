@@ -1,9 +1,0 @@
-{
-  "name": "admission-storage",
-  "version": "1.0.0",
-  "description": "Store data in GitHub private repo",
-  "main": "api/register.js",
-  "dependencies": {
-    "@octokit/rest": "^20.0.2"
-  }
-}
